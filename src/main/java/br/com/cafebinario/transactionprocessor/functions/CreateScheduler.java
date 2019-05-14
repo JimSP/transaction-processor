@@ -87,7 +87,7 @@ public class CreateScheduler implements Function<CreateSettlementRequest, Create
 				.settlement(Settlement //
 						.builder() //
 						.settlementDate(settlementDate) //
-						.transactions(transactions)
+						.transactions(mapper.getValue()) //
 						.summary(createSummary.apply(mapper.getValue())) //
 						.build()) //
 				.build();
