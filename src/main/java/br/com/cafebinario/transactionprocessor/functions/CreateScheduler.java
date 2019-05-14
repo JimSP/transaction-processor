@@ -50,7 +50,7 @@ public class CreateScheduler implements Function<CreateSettlementRequest, Create
 				.collect(classifier()) //
 				.entrySet() //
 				.stream() //
-				.map(mapper(settlementDate)) //
+				.map(createSettlementReport(settlementDate, transactions)) //
 				.collect(Collectors.toList());
 
 		return CreateSettlementResponse //
@@ -78,8 +78,8 @@ public class CreateScheduler implements Function<CreateSettlementRequest, Create
 		return Collectors.groupingBy(createTransactionClassifier);
 	}
 
-	private Function<Entry<TransactionClassifier, List<Transaction>>, SettlementReport> mapper(
-			final LocalDate settlementDate) {
+	private Function<Entry<TransactionClassifier, List<Transaction>>, SettlementReport> createSettlementReport(
+			final LocalDate settlementDate, final List<Transaction> transactions) {
 
 		return mapper -> SettlementReport //
 				.builder() //
@@ -87,6 +87,7 @@ public class CreateScheduler implements Function<CreateSettlementRequest, Create
 				.settlement(Settlement //
 						.builder() //
 						.settlementDate(settlementDate) //
+						.transactions(transactions)
 						.summary(createSummary.apply(mapper.getValue())) //
 						.build()) //
 				.build();
