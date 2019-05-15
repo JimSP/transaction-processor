@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import br.com.cafebinario.transactionprocessor.domains.SummaryItem;
 import br.com.cafebinario.transactionprocessor.domains.cardholder.models.CardHolder;
 import br.com.cafebinario.transactionprocessor.domains.cards.models.Card;
 import br.com.cafebinario.transactionprocessor.domains.stores.models.Store;
@@ -13,7 +14,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Transaction implements Serializable {
+public class Transaction implements SummaryItem, Serializable {
 
 	private static final long serialVersionUID = 4824912830114307370L;
 

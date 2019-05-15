@@ -10,11 +10,11 @@ import java.util.function.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.cafebinario.transactionprocessor.domains.transactions.models.Transaction;
+import br.com.cafebinario.transactionprocessor.domains.SummaryItem;
 import br.com.cafebinario.transactionprocessor.functions.dtos.Summary;
 
 @Component
-public class CreateSummary implements Function<List<Transaction>, Summary>{
+public class CreateSummary implements Function<List<? extends SummaryItem>, Summary>{
 
 	@Autowired
 	private SumQty sumQty;
@@ -23,17 +23,17 @@ public class CreateSummary implements Function<List<Transaction>, Summary>{
 	private SumValue sumValue;
 	
 	@Override
-	public Summary apply(final List<Transaction> transactions) {
+	public Summary apply(final List<? extends SummaryItem> summaryItem) {
 		
 		return Summary //
 				.builder() //
-				.value(sum(transactions, sumValue, Transaction::getValue, () -> BigDecimal.ZERO)) //
-				.qty(sum(transactions, sumQty, t -> BigInteger.ONE, () -> BigInteger.ZERO)) //
+				.value(sum(summaryItem, sumValue, SummaryItem::getValue, () -> BigDecimal.ZERO)) //
+				.qty(sum(summaryItem, sumQty, t -> BigInteger.ONE, () -> BigInteger.ZERO)) //
 				.build();
 	}
 
-	private <T> T sum(final List<Transaction> transactions, final BinaryOperator<T> sum, final Function<Transaction, T> getValue, final Supplier<T> orElse) {
-		return transactions //
+	private <T> T sum(final List<? extends SummaryItem> summaryItems, final BinaryOperator<T> sum, final Function<SummaryItem, T> getValue, final Supplier<T> orElse) {
+		return summaryItems //
 				.stream() //
 				.map(getValue) //
 				.reduce(sum) //

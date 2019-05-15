@@ -23,15 +23,18 @@ public class CreateSettlementReport
 	@Override
 	public SettlementReport apply(final Entry<TransactionClassifier, List<Transaction>> entry,
 			final LocalDate settlementDate) {
-		
+
 		return SettlementReport //
 				.builder() //
 				.transactionClassifier(entry.getKey()) //
 				.settlement(Settlement //
 						.builder() //
 						.settlementDate(settlementDate) //
-						.summary(createSummary.apply(entry.getValue())) //
-						.transactions(entry.getValue()) //
+						.summary(createSummary //
+								.apply(entry //
+										.getValue())) //
+						.transactions(entry //
+								.getValue()) //
 						.build()) //
 				.build();
 	}
