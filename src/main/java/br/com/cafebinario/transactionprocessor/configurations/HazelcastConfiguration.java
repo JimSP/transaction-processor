@@ -1,9 +1,9 @@
 package br.com.cafebinario.transactionprocessor.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.hazelcast.repository.config.EnableHazelcastRepositories;
 
 import com.hazelcast.config.Config;
@@ -13,12 +13,12 @@ import com.hazelcast.config.MaxSizeConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
-@Configurable
-@EnableHazelcastRepositories
+@Configuration
+@EnableHazelcastRepositories(basePackages = "br.com.cafebinario.transactionprocessor.repositories")
 @EnableCaching
 public class HazelcastConfiguration {
 
-	@Bean(destroyMethod = "shutdown")
+	@Bean(destroyMethod = "shutdown", name = "hazelcastInstance")
 	public HazelcastInstance hazelcastInstance(@Autowired final Config config) {
 		return Hazelcast.newHazelcastInstance(config);
 	}

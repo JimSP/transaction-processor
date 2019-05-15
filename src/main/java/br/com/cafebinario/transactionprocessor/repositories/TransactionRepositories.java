@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface TransactionRepositories extends PagingAndSortingRepository<TransactionData, Long> {
 
 	List<TransactionData> findByDateTimeBetween(@Param("from") final LocalDate from, @Param("to") final LocalDate to);
