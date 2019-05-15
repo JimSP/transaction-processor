@@ -12,8 +12,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import br.com.cafebinario.transactionprocessor.domain.transactions.models.Transaction;
-import br.com.cafebinario.transactionprocessor.domain.transactions.services.TransactionService;
+import br.com.cafebinario.transactionprocessor.domains.transactions.models.Transaction;
+import br.com.cafebinario.transactionprocessor.domains.transactions.services.TransactionService;
 import br.com.cafebinario.transactionprocessor.functions.dtos.Between;
 import br.com.cafebinario.transactionprocessor.functions.dtos.CreateSettlementRequest;
 import br.com.cafebinario.transactionprocessor.functions.dtos.CreateSettlementResponse;

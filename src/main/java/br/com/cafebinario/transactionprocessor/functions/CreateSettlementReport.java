@@ -8,8 +8,8 @@ import java.util.function.BiFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.cafebinario.transactionprocessor.domain.settlements.models.Settlement;
-import br.com.cafebinario.transactionprocessor.domain.transactions.models.Transaction;
+import br.com.cafebinario.transactionprocessor.domains.settlements.models.Settlement;
+import br.com.cafebinario.transactionprocessor.domains.transactions.models.Transaction;
 import br.com.cafebinario.transactionprocessor.functions.dtos.SettlementReport;
 import br.com.cafebinario.transactionprocessor.functions.dtos.TransactionClassifier;
 

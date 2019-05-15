@@ -1,6 +1,6 @@
 package br.com.cafebinario.transactionprocessor.functions.dtos;
 
-import br.com.cafebinario.transactionprocessor.domain.settlements.models.Settlement;
+import br.com.cafebinario.transactionprocessor.domains.settlements.models.Settlement;
 import lombok.Builder;
 import lombok.Data;
 

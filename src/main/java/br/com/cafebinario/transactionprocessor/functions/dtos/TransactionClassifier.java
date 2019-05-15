@@ -2,9 +2,9 @@ package br.com.cafebinario.transactionprocessor.functions.dtos;
 
 import java.time.LocalDate;
 
-import br.com.cafebinario.transactionprocessor.domain.cards.models.Product;
-import br.com.cafebinario.transactionprocessor.domain.transactions.models.Reason;
-import br.com.cafebinario.transactionprocessor.domain.transactions.models.WayPayment;
+import br.com.cafebinario.transactionprocessor.domains.cards.models.Product;
+import br.com.cafebinario.transactionprocessor.domains.transactions.models.Reason;
+import br.com.cafebinario.transactionprocessor.domains.transactions.models.WayPayment;
 import lombok.Builder;
 import lombok.Data;
 

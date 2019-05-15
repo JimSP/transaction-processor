@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.keyvalue.annotation.KeySpace;
 
-import br.com.cafebinario.transactionprocessor.domain.transactions.models.Reason;
-import br.com.cafebinario.transactionprocessor.domain.transactions.models.WayPayment;
+import br.com.cafebinario.transactionprocessor.domains.transactions.models.Reason;
+import br.com.cafebinario.transactionprocessor.domains.transactions.models.WayPayment;
 import lombok.Builder;
 import lombok.Data;
 

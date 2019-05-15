@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 import org.springframework.stereotype.Component;
 
-import br.com.cafebinario.transactionprocessor.domain.transactions.models.Transaction;
+import br.com.cafebinario.transactionprocessor.domains.transactions.models.Transaction;
 import br.com.cafebinario.transactionprocessor.functions.dtos.TransactionClassifier;
 
 @Component
