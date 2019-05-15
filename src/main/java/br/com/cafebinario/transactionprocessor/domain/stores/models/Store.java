@@ -19,6 +19,8 @@ import lombok.EqualsAndHashCode;
 @Data
 public class Store extends Person{
 
+	private static final long serialVersionUID = -5163299780727679819L;
+
 	private final Long identifier;
 	private final String commercialName;
 	private final String socialName;

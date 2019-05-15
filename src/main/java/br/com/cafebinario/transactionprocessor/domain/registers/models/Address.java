@@ -1,15 +1,19 @@
 package br.com.cafebinario.transactionprocessor.domain.registers.models;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class Address {
+public class Address implements Serializable{
+
+	private static final long serialVersionUID = -1024766474715497601L;
 
 	private final String street;
 	private final Integer number;

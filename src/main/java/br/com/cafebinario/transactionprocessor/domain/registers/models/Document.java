@@ -1,5 +1,6 @@
 package br.com.cafebinario.transactionprocessor.domain.registers.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -11,7 +12,10 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Document {
+public class Document implements Serializable {
+
+
+	private static final long serialVersionUID = -1053780423248049585L;
 
 	private final String value;
 	private final String issuerInstituition;

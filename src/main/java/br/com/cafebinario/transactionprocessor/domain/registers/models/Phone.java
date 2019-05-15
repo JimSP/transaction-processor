@@ -1,5 +1,7 @@
 package br.com.cafebinario.transactionprocessor.domain.registers.models;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
@@ -9,7 +11,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Phone {
+public class Phone implements Serializable {
+	
+	private static final long serialVersionUID = 6913664464555583658L;
 	
 	private final String ddi;
 	private final String ddd;

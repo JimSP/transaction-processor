@@ -16,6 +16,8 @@ import lombok.experimental.SuperBuilder;
 @Data
 public class CardHolder extends Person{
 
+	private static final long serialVersionUID = -3104337951730726512L;
+
 	private final String firstName;
 	private final String secoundName;
 	private final String lastName;

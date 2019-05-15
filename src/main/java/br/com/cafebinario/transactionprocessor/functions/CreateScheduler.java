@@ -3,16 +3,15 @@ package br.com.cafebinario.transactionprocessor.functions;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import br.com.cafebinario.transactionprocessor.domain.settlements.models.Settlement;
 import br.com.cafebinario.transactionprocessor.domain.transactions.models.Transaction;
 import br.com.cafebinario.transactionprocessor.domain.transactions.services.TransactionService;
 import br.com.cafebinario.transactionprocessor.functions.dtos.Between;
@@ -32,8 +31,12 @@ public class CreateScheduler implements Function<CreateSettlementRequest, Create
 	
 	@Autowired
 	private CreateSummary createSummary;
+	
+	@Autowired
+	private CreateSettlementReport createSettlementReport;
 
 	@Override
+	@Cacheable
 	public CreateSettlementResponse apply(final CreateSettlementRequest createSettlementRequest) {
 
 		validate(createSettlementRequest);
@@ -50,7 +53,7 @@ public class CreateScheduler implements Function<CreateSettlementRequest, Create
 				.collect(classifier()) //
 				.entrySet() //
 				.stream() //
-				.map(createSettlementReport(settlementDate, transactions)) //
+				.map(entry -> createSettlementReport.apply(entry, settlementDate)) //
 				.collect(Collectors.toList());
 
 		return CreateSettlementResponse //
@@ -76,20 +79,5 @@ public class CreateScheduler implements Function<CreateSettlementRequest, Create
 	private Collector<Transaction, ?, Map<TransactionClassifier, List<Transaction>>> classifier() {
 
 		return Collectors.groupingBy(createTransactionClassifier);
-	}
-
-	private Function<Entry<TransactionClassifier, List<Transaction>>, SettlementReport> createSettlementReport(
-			final LocalDate settlementDate, final List<Transaction> transactions) {
-
-		return mapper -> SettlementReport //
-				.builder() //
-				.transactionClassifier(mapper.getKey()) //
-				.settlement(Settlement //
-						.builder() //
-						.settlementDate(settlementDate) //
-						.transactions(transactions)
-						.summary(createSummary.apply(mapper.getValue())) //
-						.build()) //
-				.build();
 	}
 }

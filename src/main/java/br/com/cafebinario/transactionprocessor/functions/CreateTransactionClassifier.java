@@ -15,7 +15,7 @@ public class CreateTransactionClassifier implements Function<Transaction, Transa
 
 		return TransactionClassifier //
 				.builder() //
-				.product(transaction.getProduct()) //
+				.product(transaction.getCard().getProduct()) //
 				.reason(transaction.getReason()) //
 				.storeIdentifier(transaction.getStore().getIdentifier()) //
 				.terminalIdentifier(transaction.getTerminal().getIdentifier()) //

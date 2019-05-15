@@ -27,11 +27,17 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.cloud:spring-cloud-function-context'
 	implementation 'org.springframework.cloud:spring-cloud-starter-function-web'
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
+	
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 	
-	compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.3'
+	compile 'com.hazelcast:hazelcast:3.12'
+	compile 'com.hazelcast:hazelcast-spring:3.12'
+	compile 'com.hazelcast:spring-data-hazelcast:2.1'
+	
+	compile 'org.modelmapper:modelmapper:2.3.3'
 	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
