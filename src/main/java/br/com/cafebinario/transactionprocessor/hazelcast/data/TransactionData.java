@@ -1,4 +1,4 @@
-package br.com.cafebinario.transactionprocessor.repositories;
+package br.com.cafebinario.transactionprocessor.hazelcast.data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

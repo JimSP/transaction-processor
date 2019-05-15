@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import br.com.cafebinario.transactionprocessor.domains.transactions.models.Transaction;
 import br.com.cafebinario.transactionprocessor.domains.transactions.predicates.FindByExamplePredicate;
 import br.com.cafebinario.transactionprocessor.domains.transactions.services.TransactionService;
-import br.com.cafebinario.transactionprocessor.repositories.TransactionRepositories;
+import br.com.cafebinario.transactionprocessor.hazelcast.repositories.TransactionRepositories;
 
 @Service
 public class DefaultTransactionFacade implements TransactionService {

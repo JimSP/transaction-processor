@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.cafebinario.transactionprocessor.domains.SummaryItem;
+import br.com.cafebinario.transactionprocessor.domains.commums.SummaryItem;
 import br.com.cafebinario.transactionprocessor.functions.dtos.Summary;
 
 @Component

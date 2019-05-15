@@ -1,4 +1,4 @@
-package br.com.cafebinario.transactionprocessor.domains;
+package br.com.cafebinario.transactionprocessor.domains.commums;
 
 import java.math.BigDecimal;
 

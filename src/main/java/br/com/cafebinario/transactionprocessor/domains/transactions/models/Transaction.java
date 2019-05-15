@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import br.com.cafebinario.transactionprocessor.domains.SummaryItem;
 import br.com.cafebinario.transactionprocessor.domains.cardholder.models.CardHolder;
 import br.com.cafebinario.transactionprocessor.domains.cards.models.Card;
+import br.com.cafebinario.transactionprocessor.domains.commums.SummaryItem;
 import br.com.cafebinario.transactionprocessor.domains.stores.models.Store;
 import br.com.cafebinario.transactionprocessor.domains.terminals.models.Terminal;
 import lombok.Builder;

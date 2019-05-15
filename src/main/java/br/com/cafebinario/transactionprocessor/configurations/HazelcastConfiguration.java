@@ -14,7 +14,7 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
 @Configuration
-@EnableHazelcastRepositories(basePackages = "br.com.cafebinario.transactionprocessor.repositories")
+@EnableHazelcastRepositories(basePackages = "br.com.cafebinario.transactionprocessor.hazelcast.repositories")
 @EnableCaching
 public class HazelcastConfiguration {
 
