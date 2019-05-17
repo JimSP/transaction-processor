@@ -1,7 +1,11 @@
 package br.com.cafebinario.transactionprocessor.domains.cards.models;
 
 import br.com.cafebinario.transactionprocessor.domains.transactions.models.TransactionType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
+@AllArgsConstructor
 public enum Product {
 
 	VISA_CREDIT(TransactionType.CREDIT),
@@ -24,12 +28,4 @@ public enum Product {
 	PRIVATE_LABEL(TransactionType.DEBIT);
 	
 	private final TransactionType transactionType;
-	
-	private Product(final TransactionType transactionType) {
-		this.transactionType = transactionType;
-	}
-
-	public TransactionType getTransactionType() {
-		return transactionType;
-	}
 }

@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper=true)
 @Data
-public class CardHolder extends Person{
+public final class CardHolder extends Person{
 
 	private static final long serialVersionUID = -3104337951730726512L;
 
@@ -32,11 +32,12 @@ public class CardHolder extends Person{
 			@JsonProperty final String firstName,
 			@JsonProperty final String secoundName,
 			@JsonProperty final String lastName,
+			@JsonProperty final PersonType personType,
 			@JsonProperty final List<Address> addresses,
 			@JsonProperty final List<Phone> phones,
 			@JsonProperty final List<Document> documents) {
 		
-		super(PersonType.PRIVATE, addresses, phones, documents);
+		super(personType, addresses, phones, documents);
 		
 		this.firstName = firstName;
 		this.secoundName = secoundName;

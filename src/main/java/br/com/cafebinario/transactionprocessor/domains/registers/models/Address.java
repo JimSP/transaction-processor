@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Address implements Serializable{
+public final class Address implements Serializable{
 
 	private static final long serialVersionUID = -1024766474715497601L;
 

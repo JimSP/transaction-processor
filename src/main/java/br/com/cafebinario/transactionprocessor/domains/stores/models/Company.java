@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import br.com.cafebinario.transactionprocessor.domains.registers.models.Address;
 import br.com.cafebinario.transactionprocessor.domains.registers.models.Document;
@@ -16,14 +17,14 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper=true)
 @Data
 @SuperBuilder
-public class Company extends Store {
+public final class Company extends Store {
 
 	private static final long serialVersionUID = -142844955863081809L;
 
 	private final Store headOffice;
 	private final List<Store> stores;
 	
-	@JsonCreator
+	@JsonCreator(mode=Mode.PROPERTIES)
 	public Company(
 			@JsonProperty final Long identifier,
 			@JsonProperty final String commercialName,

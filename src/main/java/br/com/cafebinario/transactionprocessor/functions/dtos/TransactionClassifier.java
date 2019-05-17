@@ -1,6 +1,10 @@
 package br.com.cafebinario.transactionprocessor.functions.dtos;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.com.cafebinario.transactionprocessor.domains.cards.models.Product;
 import br.com.cafebinario.transactionprocessor.domains.transactions.models.Reason;
@@ -10,7 +14,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class TransactionClassifier {
+public class TransactionClassifier  implements Serializable {
+
+	private static final long serialVersionUID = -7888977785988842452L;
 
 	private final LocalDate transactionDate;
 	
@@ -24,13 +30,14 @@ public class TransactionClassifier {
 	
 	private final Reason reason;
 	
+	@JsonCreator
 	public TransactionClassifier(
-			final LocalDate transactionDate,
-			final Product product,
-			final WayPayment wayPayment,
-			final Long storeIdentifier,
-			final Long terminalIdentifier,
-			final Reason reason) {
+			@JsonProperty final LocalDate transactionDate,
+			@JsonProperty final Product product,
+			@JsonProperty final WayPayment wayPayment,
+			@JsonProperty final Long storeIdentifier,
+			@JsonProperty final Long terminalIdentifier,
+			@JsonProperty final Reason reason) {
 		
 		this.transactionDate = transactionDate;
 		this.product = product;

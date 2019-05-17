@@ -37,7 +37,7 @@ public class Store extends Person{
 			@JsonProperty final List<Document> documents,
 			@JsonProperty final List<Departament> departaments) {
 		
-		super(PersonType.COMMERCIAL, addresses, phones, documents);
+		super(PersonType.LEGAL, addresses, phones, documents);
 		
 		this.identifier = identifier;
 		this.commercialName = commercialName;

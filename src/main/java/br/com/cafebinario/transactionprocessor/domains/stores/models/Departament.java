@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import br.com.cafebinario.transactionprocessor.domains.terminals.models.Terminal;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Departament implements Serializable{
+public final class Departament implements Serializable{
 
 	private static final long serialVersionUID = 694475862292385291L;
 
@@ -21,7 +22,7 @@ public class Departament implements Serializable{
 	private final String cnae;
 	private final String mcc;
 	
-	@JsonCreator
+	@JsonCreator(mode=Mode.PROPERTIES)
 	public Departament(
 			@JsonProperty final Long identifier,
 			@JsonProperty final List<Terminal> terminals,
