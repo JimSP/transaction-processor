@@ -14,14 +14,14 @@ import org.springframework.util.Assert;
 
 import br.com.cafebinario.transactionprocessor.domains.transactions.models.Transaction;
 import br.com.cafebinario.transactionprocessor.domains.transactions.services.TransactionService;
-import br.com.cafebinario.transactionprocessor.functions.dtos.Between;
-import br.com.cafebinario.transactionprocessor.functions.dtos.CreateSettlementRequest;
-import br.com.cafebinario.transactionprocessor.functions.dtos.CreateSettlementResponse;
-import br.com.cafebinario.transactionprocessor.functions.dtos.SettlementReport;
-import br.com.cafebinario.transactionprocessor.functions.dtos.TransactionClassifier;
+import br.com.cafebinario.transactionprocessor.functions.dtos.filters.Between;
+import br.com.cafebinario.transactionprocessor.functions.dtos.filters.TransactionClassifier;
+import br.com.cafebinario.transactionprocessor.functions.dtos.reports.ScheduleReport;
+import br.com.cafebinario.transactionprocessor.functions.dtos.requests.CreateScheduleRequest;
+import br.com.cafebinario.transactionprocessor.functions.dtos.responses.CreateScheduleResponse;
 
 @Component
-public class CreateScheduler implements Function<CreateSettlementRequest, CreateSettlementResponse> {
+public class CreateScheduler implements Function<CreateScheduleRequest, CreateScheduleResponse> {
 
 	@Autowired
 	private TransactionService transactionService;
@@ -33,45 +33,45 @@ public class CreateScheduler implements Function<CreateSettlementRequest, Create
 	private CreateSummary createSummary;
 	
 	@Autowired
-	private CreateSettlementReport createSettlementReport;
+	private CreateScheduleReport createScheduleReport;
 
 	@Override
 	@Cacheable
-	public CreateSettlementResponse apply(final CreateSettlementRequest createSettlementRequest) {
+	public CreateScheduleResponse apply(final CreateScheduleRequest createScheduleRequest) {
 
-		validate(createSettlementRequest);
+		validate(createScheduleRequest);
 
-		final LocalDate settlementDate = createSettlementRequest.getSettlementDate();
-		final Between between = createSettlementRequest.getBetween();
+		final LocalDate settlementDate = createScheduleRequest.getSettlementDate();
+		final Between between = createScheduleRequest.getBetween();
 		final LocalDate from = between.getFrom();
 		final LocalDate to = between.getTo();
 
 		final List<Transaction> transactions = transactionService.getTransactions(from, to);
 
-		final List<SettlementReport> settlementReports = transactions //
+		final List<ScheduleReport> scheduleReports = transactions //
 				.stream() //
 				.collect(classifier()) //
 				.entrySet() //
 				.stream() //
-				.map(entry -> createSettlementReport.apply(entry, settlementDate)) //
+				.map(entry -> createScheduleReport.apply(entry.getValue(), settlementDate)) //
 				.collect(Collectors.toList());
 
-		return CreateSettlementResponse //
+		return CreateScheduleResponse //
 				.builder() //
-				.settlementReports(settlementReports) //
+				.scheduleReports(scheduleReports) //
 				.summary(createSummary.apply(transactions)) //
 				.build();
 	}
 
-	private void validate(final CreateSettlementRequest createSettlementRequest) {
+	private void validate(final CreateScheduleRequest createScheduleRequest) {
 
-		Assert.notNull(createSettlementRequest, "createSettlementRequest is null.");
+		Assert.notNull(createScheduleRequest, "createSettlementRequest is null.");
 
-		final LocalDate settlementDate = createSettlementRequest.getSettlementDate();
+		final LocalDate settlementDate = createScheduleRequest.getSettlementDate();
 
 		Assert.notNull(settlementDate, "createSettlementRequest.settlementDate is null.");
 
-		final Between between = createSettlementRequest.getBetween();
+		final Between between = createScheduleRequest.getBetween();
 
 		Assert.notNull(between, "createSettlementRequest.between is null.");
 	}

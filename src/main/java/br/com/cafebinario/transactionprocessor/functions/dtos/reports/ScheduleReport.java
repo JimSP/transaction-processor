@@ -1,4 +1,4 @@
-package br.com.cafebinario.transactionprocessor.functions.dtos;
+package br.com.cafebinario.transactionprocessor.functions.dtos.reports;
 
 import java.io.Serializable;
 
@@ -12,19 +12,16 @@ import lombok.Data;
 
 @Data
 @Builder
-public class SettlementReport implements Serializable {
+public class ScheduleReport implements Serializable {
 
 	private static final long serialVersionUID = -9025672279165139259L;
-
-	private final TransactionClassifier transactionClassifier;
+	
 	private final Settlement settlement;
 	
 	@JsonCreator(mode=Mode.PROPERTIES)
-	public SettlementReport(
-			@JsonProperty final TransactionClassifier transactionClassifier,
+	public ScheduleReport(
 			@JsonProperty final Settlement settlement) {
 
-		this.transactionClassifier = transactionClassifier;
 		this.settlement = settlement;
 	}
 }

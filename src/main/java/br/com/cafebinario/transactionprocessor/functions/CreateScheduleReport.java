@@ -2,7 +2,6 @@ package br.com.cafebinario.transactionprocessor.functions;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.function.BiFunction;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,31 +9,27 @@ import org.springframework.stereotype.Component;
 
 import br.com.cafebinario.transactionprocessor.domains.settlements.models.Settlement;
 import br.com.cafebinario.transactionprocessor.domains.transactions.models.Transaction;
-import br.com.cafebinario.transactionprocessor.functions.dtos.SettlementReport;
-import br.com.cafebinario.transactionprocessor.functions.dtos.TransactionClassifier;
+import br.com.cafebinario.transactionprocessor.functions.dtos.reports.ScheduleReport;
 
 @Component
-public class CreateSettlementReport
-		implements BiFunction<Entry<TransactionClassifier, List<Transaction>>, LocalDate, SettlementReport> {
+public class CreateScheduleReport
+		implements BiFunction<List<Transaction>, LocalDate, ScheduleReport> {
 
 	@Autowired
 	private CreateSummary createSummary;
 
 	@Override
-	public SettlementReport apply(final Entry<TransactionClassifier, List<Transaction>> entry,
+	public ScheduleReport apply(final List<Transaction> transactions,
 			final LocalDate settlementDate) {
 
-		return SettlementReport //
+		return ScheduleReport //
 				.builder() //
-				.transactionClassifier(entry.getKey()) //
 				.settlement(Settlement //
 						.builder() //
 						.settlementDate(settlementDate) //
 						.summary(createSummary //
-								.apply(entry //
-										.getValue())) //
-						.transactions(entry //
-								.getValue()) //
+								.apply(transactions)) //
+						.transactions(transactions) //
 						.build()) //
 				.build();
 	}

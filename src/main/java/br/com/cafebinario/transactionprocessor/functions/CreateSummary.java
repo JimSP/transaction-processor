@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.cafebinario.transactionprocessor.domains.commums.SummaryItem;
-import br.com.cafebinario.transactionprocessor.functions.dtos.Summary;
+import br.com.cafebinario.transactionprocessor.functions.dtos.reports.Summary;
 
 @Component
 public class CreateSummary implements Function<List<? extends SummaryItem>, Summary>{

@@ -1,4 +1,4 @@
-package br.com.cafebinario.transactionprocessor.functions.dtos;
+package br.com.cafebinario.transactionprocessor.functions.dtos.reports;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

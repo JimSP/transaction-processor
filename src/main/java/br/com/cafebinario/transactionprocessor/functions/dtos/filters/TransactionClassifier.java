@@ -1,4 +1,4 @@
-package br.com.cafebinario.transactionprocessor.functions.dtos;
+package br.com.cafebinario.transactionprocessor.functions.dtos.filters;
 
 import java.io.Serializable;
 import java.time.LocalDate;

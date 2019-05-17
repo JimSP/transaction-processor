@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import br.com.cafebinario.transactionprocessor.domains.transactions.models.Transaction;
-import br.com.cafebinario.transactionprocessor.functions.dtos.Summary;
+import br.com.cafebinario.transactionprocessor.functions.dtos.reports.Summary;
 import lombok.Builder;
 import lombok.Data;
 
