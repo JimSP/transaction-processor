@@ -75,7 +75,9 @@ public class DefaultTransactionFacade implements TransactionService {
 						.save( //
 								modelMapper //
 										.map(transaction, TransactionData.TransactionDataBuilder.class) //
-										.dateTime(LocalDateTime.now()).reason(Reason.ACCEPT).build()), //
+										.dateTime(LocalDateTime.now()) //
+										.reason(Reason.ACCEPT) //
+										.build()), //
 						Transaction.TransactionBuilder.class) //
 				.build();
 
@@ -83,7 +85,8 @@ public class DefaultTransactionFacade implements TransactionService {
 				.save(TransactionStepData //
 						.builder() //
 						.identifier(transactionSaved.getIdentifier()) //
-						.stepType(StepType.CREATE).transaction(transactionSaved) //
+						.stepType(StepType.CREATE) //
+						.transaction(transactionSaved) //
 						.build());
 
 		return transactionSaved;

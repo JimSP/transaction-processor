@@ -28,18 +28,21 @@ public class DefaultMonitorService implements MonitorService {
 
 	@PostConstruct
 	public void setup() {
+
 		monitorPool.put(TransactionStep.class, transactionMonitor);
 	}
 
 	@Override
 	public <T extends Monitorable> void register(final T target, final Class<T> monitorType) {
 
-		final Map<Long, MonitorEntry<? extends Monitorable>> partition = monitorPool.get(monitorType);
-
+		final Map<Long, MonitorEntry<? extends Monitorable>> partition = getPartition(monitorType);
+		
 		partition //
 				.put(target.getIdentifier(), //
 						MonitorEntry //
 								.builder() //
+								.entry(target) //
+								.monitorStatus(MonitorStatus.WAITING) //
 								.entry(target) //
 								.build());
 	}
@@ -54,5 +57,62 @@ public class DefaultMonitorService implements MonitorService {
 						.<Monitorable>builder() //
 						.monitorStatus(MonitorStatus.NOT_FOUND) //
 						.build());
+	}
+
+	@Override
+	public <T extends Monitorable> void emitProcessing(final Class<T> monitorType, final Long identifier) {
+
+		updateMonitorStatus(monitorType, identifier, MonitorStatus.PROCESSING);
+	}
+	
+	@Override
+	public <T extends Monitorable> void emitOk(final Class<T> monitorType, final Long identifier) {
+		
+		updateMonitorStatus(monitorType, identifier, MonitorStatus.OK);
+	}
+
+	@Override
+	public <T extends Monitorable> void emitError(final Class<T> monitorType, final Long identifier) {
+		
+		updateMonitorStatus(monitorType, identifier, MonitorStatus.ERROR);
+	}
+
+	@Override
+	public <T extends Monitorable> void unregister(final Class<T> monitorType, final Long identifier) {
+		
+		final Map<Long, MonitorEntry<? extends Monitorable>> partition = getPartition(monitorType);
+		
+		partition.remove(identifier);
+	}
+
+	@Override
+	public <T extends Monitorable> void clean(final Class<T> monitorType) {
+		
+		final Map<Long, MonitorEntry<? extends Monitorable>> partition = getPartition(monitorType);
+		
+		partition.clear();
+	}
+
+	@Override
+	public void clean() {
+		
+		monitorPool.clear();
+	}
+	
+	private <T extends Monitorable> Map<Long, MonitorEntry<? extends Monitorable>> getPartition(
+			final Class<T> monitorType) {
+		
+		return monitorPool.get(monitorType);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private <T extends Monitorable> void updateMonitorStatus(final Class<T> monitorType, final Long identifier, final MonitorStatus monitorStatus) {
+
+		final MonitorEntry<Monitorable> monitorEntry = walkOneUp(monitorType, identifier) //
+				.toBuilder() //
+				.monitorStatus(monitorStatus) //
+				.build();
+		
+		register((T) monitorEntry.getEntry(), monitorType);
 	}
 }

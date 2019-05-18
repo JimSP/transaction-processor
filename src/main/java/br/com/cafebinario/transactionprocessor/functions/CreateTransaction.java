@@ -1,45 +1,51 @@
 package br.com.cafebinario.transactionprocessor.functions;
 
-import java.util.concurrent.ExecutorService;
+import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.hazelcast.core.ITopic;
 
 import br.com.cafebinario.transactionprocessor.domains.transactions.models.Transaction;
-import br.com.cafebinario.transactionprocessor.domains.transactions.services.TransactionService;
 import br.com.cafebinario.transactionprocessor.functions.dtos.requests.CreateTransactionRequest;
+import br.com.cafebinario.transactionprocessor.messages.dtos.InternalMessage;
+import br.com.cafebinario.transactionprocessor.messages.dtos.Route;
+import br.com.cafebinario.transactionprocessor.messages.dtos.RouteCatalog;
 
 @Service
 public class CreateTransaction implements Consumer<CreateTransactionRequest> {
 
-	@Autowired
-	@Qualifier("hazelcastExecutorService")
-	private ExecutorService hazelcastExecutorService;
+	private static final String SOURCE = "CreateTransaction";
+	private static final String OPERATION = "#transaction:dispacher";
 
 	@Autowired
-	private TransactionService transactionService;
+	@Qualifier("transactionTopic")
+	private ITopic<InternalMessage<Transaction>> transactionTopic;
 
 	@Override
+	@Transactional
 	public void accept(final CreateTransactionRequest createTransactionRequest) {
-
-		final Transaction transaction = createTransactionRequest.getTransaction();
-		
-		dispacher(transaction);
-
-		monitoring(transaction);
+		dispacher(createTransactionRequest);
 	}
 
-	private void dispacher(final Transaction transaction) {
+	private void dispacher(final CreateTransactionRequest createTransactionRequest) {
 
-		hazelcastExecutorService //
-				.submit(() -> transactionService //
-						.create(transaction));
-	}
-
-	private void monitoring(final Transaction transaction) {
-
-		transactionService.monitoring(transaction);
+		transactionTopic //
+				.publish(InternalMessage.<Transaction>builder() //
+						.contentData(createTransactionRequest //
+								.getTransaction()) //
+						.createdDateTime(LocalDateTime.now()) //
+						.urlCallback(createTransactionRequest.getUrlCallback()) //
+						.route(Route //
+								.builder() //
+								.routeKey(RouteCatalog.QUEUE_TRANSACTION_ROUTE_KEY) //
+								.operation(OPERATION) //
+								.source(SOURCE) //
+								.build()) //
+						.build());
 	}
 }

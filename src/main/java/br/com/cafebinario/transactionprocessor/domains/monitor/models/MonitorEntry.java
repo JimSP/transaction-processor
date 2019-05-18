@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
-public class MonitorEntry<T extends Monitorable> implements Serializable{
+@Builder(toBuilder = true)
+public class MonitorEntry<T extends Monitorable> implements Serializable {
 
 	private static final long serialVersionUID = -8775905855643061734L;
 

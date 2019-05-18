@@ -16,5 +16,5 @@ public interface TransactionService {
 	Transaction chargeback(final Transaction transaction);
 	Transaction systemReversal(final Transaction transaction);
 	Transaction fraud(final Transaction transaction);
-	void monitoring(final Transaction transactionFuture);
+	void monitoring(final Transaction transaction);
 }
