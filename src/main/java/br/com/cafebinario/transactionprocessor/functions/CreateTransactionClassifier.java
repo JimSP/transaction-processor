@@ -2,12 +2,12 @@ package br.com.cafebinario.transactionprocessor.functions;
 
 import java.util.function.Function;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.com.cafebinario.transactionprocessor.domains.transactions.models.Transaction;
 import br.com.cafebinario.transactionprocessor.functions.dtos.filters.TransactionClassifier;
 
-@Component
+@Service
 public class CreateTransactionClassifier implements Function<Transaction, TransactionClassifier> {
 
 	@Override

@@ -8,12 +8,12 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.com.cafebinario.transactionprocessor.domains.commums.SummaryItem;
 import br.com.cafebinario.transactionprocessor.functions.dtos.reports.Summary;
 
-@Component
+@Service
 public class CreateSummary implements Function<List<? extends SummaryItem>, Summary>{
 
 	@Autowired

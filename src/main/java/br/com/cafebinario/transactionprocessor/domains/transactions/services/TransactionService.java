@@ -9,10 +9,12 @@ public interface TransactionService {
 
 	List<Transaction> getTransactions(final LocalDate from, final LocalDate to, final Transaction example);
 	List<Transaction> getTransactions(final LocalDate from, final LocalDate to);
+	Transaction getTransaction(final Long identifier);
 	Transaction create(final Transaction transaction);
 	Transaction cancel(final Transaction transaction);
 	Transaction reversal(final Transaction transaction);
 	Transaction chargeback(final Transaction transaction);
 	Transaction systemReversal(final Transaction transaction);
 	Transaction fraud(final Transaction transaction);
+	void monitoring(final Transaction transactionFuture);
 }

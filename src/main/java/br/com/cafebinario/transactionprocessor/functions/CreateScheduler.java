@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import br.com.cafebinario.transactionprocessor.domains.transactions.models.Transaction;
@@ -20,7 +20,7 @@ import br.com.cafebinario.transactionprocessor.functions.dtos.reports.ScheduleRe
 import br.com.cafebinario.transactionprocessor.functions.dtos.requests.CreateScheduleRequest;
 import br.com.cafebinario.transactionprocessor.functions.dtos.responses.CreateScheduleResponse;
 
-@Component
+@Service
 public class CreateScheduler implements Function<CreateScheduleRequest, CreateScheduleResponse> {
 
 	@Autowired

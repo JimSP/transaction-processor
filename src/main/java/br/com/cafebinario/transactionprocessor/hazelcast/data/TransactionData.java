@@ -20,7 +20,7 @@ public class TransactionData implements Comparable<TransactionData>, Serializabl
 	private static final long serialVersionUID = -263021921861770826L;
 
 	@Id
-	private Long id;
+	private Long identifier;
 	
 	private BigDecimal value;
 	private LocalDateTime dateTime;
@@ -34,7 +34,7 @@ public class TransactionData implements Comparable<TransactionData>, Serializabl
 	
 	@Override
 	public int compareTo(final TransactionData otherTransactionData) {
-		return Long.compare(id, otherTransactionData.id);
+		return Long.compare(identifier, otherTransactionData.identifier);
 	}
 
 }

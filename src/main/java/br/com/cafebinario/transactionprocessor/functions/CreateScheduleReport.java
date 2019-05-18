@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.com.cafebinario.transactionprocessor.domains.settlements.models.Settlement;
 import br.com.cafebinario.transactionprocessor.domains.transactions.models.Transaction;
 import br.com.cafebinario.transactionprocessor.functions.dtos.reports.ScheduleReport;
 
-@Component
+@Service
 public class CreateScheduleReport
 		implements BiFunction<List<Transaction>, LocalDate, ScheduleReport> {
 

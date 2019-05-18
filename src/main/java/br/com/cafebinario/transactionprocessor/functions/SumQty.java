@@ -3,9 +3,9 @@ package br.com.cafebinario.transactionprocessor.functions;
 import java.math.BigInteger;
 import java.util.function.BinaryOperator;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class SumQty implements BinaryOperator<BigInteger>{
 
 	@Override
