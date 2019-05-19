@@ -1,4 +1,4 @@
-package br.com.cafebinario.transactionprocessor.functions;
+package br.com.cafebinario.transactionprocessor.functions.exposes;
 
 import java.time.LocalDate;
 import java.util.List;

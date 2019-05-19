@@ -1,4 +1,4 @@
-package br.com.cafebinario.transactionprocessor.functions;
+package br.com.cafebinario.transactionprocessor.functions.internal;
 
 import java.math.BigInteger;
 import java.util.function.BinaryOperator;

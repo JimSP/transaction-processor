@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class CreateTransactionResponse implements Serializable{
+public final class CreateTransactionResponse implements Serializable{
 	
 	private static final long serialVersionUID = -6872965584915468971L;
 

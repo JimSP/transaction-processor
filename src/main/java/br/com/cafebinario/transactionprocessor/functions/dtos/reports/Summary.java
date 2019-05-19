@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Summary implements Serializable {
+public final class Summary implements Serializable {
 
 	private static final long serialVersionUID = -5337646536337637916L;
 

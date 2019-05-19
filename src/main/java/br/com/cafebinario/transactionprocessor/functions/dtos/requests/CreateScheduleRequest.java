@@ -19,7 +19,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class CreateScheduleRequest implements Serializable {
+public final class CreateScheduleRequest implements Serializable {
 
 	private static final long serialVersionUID = -6832772884711276738L;
 

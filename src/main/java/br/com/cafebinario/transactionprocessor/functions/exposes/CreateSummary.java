@@ -1,4 +1,4 @@
-package br.com.cafebinario.transactionprocessor.functions;
+package br.com.cafebinario.transactionprocessor.functions.exposes;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.cafebinario.transactionprocessor.domains.commums.SummaryItem;
 import br.com.cafebinario.transactionprocessor.functions.dtos.reports.Summary;
+import br.com.cafebinario.transactionprocessor.functions.internal.SumQty;
+import br.com.cafebinario.transactionprocessor.functions.internal.SumValue;
 
 @Service
 public class CreateSummary implements Function<List<? extends SummaryItem>, Summary>{

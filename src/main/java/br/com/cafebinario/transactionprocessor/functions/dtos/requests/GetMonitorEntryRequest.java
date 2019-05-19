@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class GetMonitorEntryRequest implements Serializable {
+public final class GetMonitorEntryRequest implements Serializable {
 
 	private static final long serialVersionUID = -6007174300801827156L;
 

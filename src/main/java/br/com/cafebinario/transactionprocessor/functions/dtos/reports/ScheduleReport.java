@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ScheduleReport implements Serializable {
+public final class ScheduleReport implements Serializable {
 
 	private static final long serialVersionUID = -9025672279165139259L;
 	

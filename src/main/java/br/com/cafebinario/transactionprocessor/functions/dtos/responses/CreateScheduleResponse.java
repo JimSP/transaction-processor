@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class CreateScheduleResponse implements Serializable {
+public final class CreateScheduleResponse implements Serializable {
 
 	private static final long serialVersionUID = 6102842437248061573L;
 

@@ -14,7 +14,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class TransactionClassifier  implements Serializable {
+public final class TransactionClassifier  implements Serializable {
 
 	private static final long serialVersionUID = -7888977785988842452L;
 

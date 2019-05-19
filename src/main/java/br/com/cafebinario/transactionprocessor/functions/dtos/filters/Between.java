@@ -13,7 +13,8 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Between implements Serializable {
+
+public final class Between implements Serializable {
 	
 	private static final long serialVersionUID = 1708931288865525119L;
 
