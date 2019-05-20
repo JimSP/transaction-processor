@@ -13,14 +13,14 @@ import lombok.Data;
 public final class FunctionContract {
 
 	private final List<FunctionHandle> handles;
-	private final FunctionInput input;
-	private final FunctionOutput output;
+	private final AttributeDefinition input;
+	private final AttributeDefinition output;
 	
 	@JsonCreator
 	public FunctionContract(
 			@JsonProperty final List<FunctionHandle> handles,
-			@JsonProperty final FunctionInput input,
-			@JsonProperty final FunctionOutput output) {
+			@JsonProperty final AttributeDefinition input,
+			@JsonProperty final AttributeDefinition output) {
 
 		this.handles = handles;
 		this.input = input;

@@ -17,11 +17,10 @@ import org.springframework.stereotype.Service;
 
 import com.hazelcast.util.function.Predicate;
 
+import br.com.cafebinario.transactionprocessor.functions.dtos.reports.AttributeDefinition;
 import br.com.cafebinario.transactionprocessor.functions.dtos.reports.Contracts;
 import br.com.cafebinario.transactionprocessor.functions.dtos.reports.FunctionContract;
 import br.com.cafebinario.transactionprocessor.functions.dtos.reports.FunctionHandle;
-import br.com.cafebinario.transactionprocessor.functions.dtos.reports.FunctionInput;
-import br.com.cafebinario.transactionprocessor.functions.dtos.reports.FunctionOutput;
 import br.com.cafebinario.transactionprocessor.functions.dtos.reports.HttpMethod;
 
 @Service("api-catalog")
@@ -65,10 +64,12 @@ public class TransactionProcessorCatalog implements Supplier<Contracts> {
 		return streamOf(functionPairs) //
 				.get() //
 				.map(pair -> functionContract( //
-						pair.getSecond(), //
+						pair //
+								.getSecond(), //
 						Arrays.asList( //
-								functionHandle(pair.getFirst(), HttpMethod.GET),
-								functionHandle(pair.getFirst(), HttpMethod.POST)), "apply"::equals, 1)) //
+								functionHandle(pair.getFirst(), HttpMethod.GET, Boolean.TRUE),
+								functionHandle(pair.getFirst(), HttpMethod.POST, Boolean.FALSE)),
+						"apply"::equals, 1)) //
 				.collect(Collectors.toList());
 	}
 
@@ -79,7 +80,8 @@ public class TransactionProcessorCatalog implements Supplier<Contracts> {
 				.map(pair -> functionContract( //
 						pair.getSecond(), //
 						Arrays.asList( //
-								functionHandle(pair.getFirst(), HttpMethod.POST)), "accept"::equals, 1)) //
+								functionHandle(pair.getFirst(), HttpMethod.POST, Boolean.FALSE)),
+						"accept"::equals, 1)) //
 				.collect(Collectors.toList());
 	}
 
@@ -90,17 +92,19 @@ public class TransactionProcessorCatalog implements Supplier<Contracts> {
 				.map(pair -> functionContract( //
 						pair.getSecond(), //
 						Arrays.asList( //
-								functionHandle(pair.getFirst(), HttpMethod.GET)), "get"::equals, 0)) //
+								functionHandle(pair.getFirst(), HttpMethod.GET, Boolean.FALSE)),
+						"get"::equals, 0)) //
 				.collect(Collectors.toList());
 	}
-	
+
 	private Supplier<Stream<Pair<String, Object>>> streamOf(final List<Pair<String, Object>> functionPairs) {
 		return () -> functionPairs //
 				.stream() //
 				.filter(this::wasExposePackage);
 	}
 
-	private FunctionContract functionContract(final Object bean, final List<FunctionHandle> handles, final Predicate<String> methodNamePredicate, int parameterCount) {
+	private FunctionContract functionContract(final Object bean, final List<FunctionHandle> handles,
+			final Predicate<String> methodNamePredicate, int parameterCount) {
 
 		final Method method = Arrays //
 				.asList(bean //
@@ -108,43 +112,38 @@ public class TransactionProcessorCatalog implements Supplier<Contracts> {
 						.getDeclaredMethods()) //
 				.stream() //
 				.filter(methodFiltred -> methodFiltred.getParameterCount() == parameterCount)
-				.filter(methodFiltred->methodNamePredicate.test(methodFiltred.getName())) //
+				.filter(methodFiltred -> methodNamePredicate.test(methodFiltred.getName())) //
 				.findAny() //
 				.orElseThrow(RuntimeException::new);
 
-		final Class<?> parameterType = method.getParameterTypes() != null && method.getParameterTypes().length > 0
-				? method.getParameterTypes()[0]
-				: null;
+		final Class<?> parameterType = method //
+				.getParameterTypes() != null && method.getParameterTypes().length > 0 ? method.getParameterTypes()[0]
+						: null;
 
 		final Class<?> returnType = method.getReturnType() != null ? method.getReturnType() : null;
 
 		return FunctionContract //
 				.builder() //
 				.handles(handles) //
-				.input(input(parameterType != null ? parameterType.getSimpleName() : EMPTY, EMPTY)) //
-				.output(output(returnType != null ? returnType.getSimpleName() : EMPTY, EMPTY)) //
+				.input(parameter(null, parameterType != null ? parameterType.getName() : null)) //
+				.output(parameter(null, returnType != null ? returnType.getName() : null)) //
 				.build();
 	}
-
-	private FunctionHandle functionHandle(final String name, final HttpMethod httpMethod) {
+	
+	private FunctionHandle functionHandle(final String name, final HttpMethod httpMethod, final Boolean hasItem) {
 
 		return FunctionHandle //
 				.builder() //
 				.httpMethod(httpMethod) //
-				.path(httpMethod.getPath(name)) //
+				.path(httpMethod.getPath(name) + (hasItem ? "/{item}" : EMPTY)) //
 				.build();
 	}
 
-	private FunctionInput input(final String type, final String example) {
+	private AttributeDefinition parameter(final String name, final String type) {
 
-		return FunctionInput.builder().type(type).example(example).build();
+		return AttributeDefinition.builder().name(name).type(type).build();
 	}
 
-	private FunctionOutput output(final String type, final String example) {
-
-		return FunctionOutput.builder().type(type).example(example).build();
-	}
-	
 	private boolean wasExposePackage(Pair<String, Object> pair) {
 
 		return pair //
